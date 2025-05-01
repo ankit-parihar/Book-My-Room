@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Successful</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .success-container {
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-container h1 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+            font-weight: 900;
+        }
+
+        .success-container p {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="success-container">
+    <h1>Thank You for Your Booking!</h1>
+    <p>Your booking has been successfully processed. We look forward for your stay.</p>
+</div>
+
+</body>
+</html>
