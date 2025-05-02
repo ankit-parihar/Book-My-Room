@@ -4,9 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Database connection
 $servername = "localhost";
-$db_username = "root";
+$db_username = "users";
 $db_password = "";
 $dbname = "user_system";
 
@@ -21,22 +20,44 @@ $message = "";
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $locality = mysqli_real_escape_string($conn, $_POST['locality']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $locality = trim($_POST['locality']);
+    $password = trim($_POST['password']);
 
     if (empty($username) || empty($email) || empty($locality) || empty($password)) {
         $message = "All fields are required!";
     } else {
-        // Store the plain password (⚠ not recommended)
-        $sql = "INSERT INTO users (username, email, locality, password) VALUES ('$username', '$email', '$locality', '$password')";
+        // Check if email already exists
+        $check_stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $check_stmt->bind_param("s", $email);
+        $check_stmt->execute();
+        $check_stmt->store_result();
 
-        if ($conn->query($sql) === TRUE) {
-            $message = "Registration successful!";
+        if ($check_stmt->num_rows > 0) {
+            $message = "Email already exists, please log in.";
         } else {
-            $message = "Error: " . $conn->error;
+            // Insert new user
+            $insert_stmt = $conn->prepare("INSERT INTO users (username, email, locality, password) VALUES (?, ?, ?, ?)");
+            $insert_stmt->bind_param("ssss", $username, $email, $locality, $password);
+
+            if ($insert_stmt->execute()) {
+                // Close connections before redirect
+                $insert_stmt->close();
+                $check_stmt->close();
+                $conn->close();
+
+                // Redirect to login page
+                header("Location: login.php");
+                exit();
+            } else {
+                $message = "Error: " . $insert_stmt->error;
+            }
+
+            $insert_stmt->close();
         }
+
+        $check_stmt->close();
     }
 }
 
@@ -89,7 +110,7 @@ $conn->close();
 
                 <!-- Link -->
                 <div class="links">
-                    <a href="login.html">Already have an account? Log in</a>
+                    <a href="login.php">Already have an account? Log in</a>
                 </div>
 
                 <!-- Submit -->

@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Enable error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -34,8 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $stmt->get_result();
 
         if ($result->num_rows === 1) {
-            $message = "Login successful! Welcome.";
-            // You can start a session here or redirect to a dashboard
+            // Optional: set session variables if needed
+            $_SESSION['user_email'] = $email;
+
+            // Redirect to front.html
+            header("Location: front.html");
+            exit(); // Important: stop further script execution
         } else {
             $message = "Invalid email or password.";
         }
@@ -52,7 +58,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="signup.css" type="text/css">
+    <link rel="stylesheet" href="login.css" type="text/css">
 </head>
 <body>
     <div class="box">
