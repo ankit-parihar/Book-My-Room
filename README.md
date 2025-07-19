@@ -21,3 +21,8 @@ ________________________________________________________________________________
 - **Backend:** PHP (for server-side processing)
 - **Database:** MySQL (if used for storing booking data)
 ------------------------------------------------------------------------------
+🙌 Author
+
+Made with ❤️ by Ankit Singh Parihar.
+📫 Reach out: ankitparihar8923@gmail.com
+-------------------------------------------------------------------------------
