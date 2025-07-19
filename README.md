@@ -9,7 +9,7 @@ ________________________________________________________________________________
 
 ✅ Browse available rooms with descriptions and images  
 ✅ Make room reservations using an online booking form  
-✅ Admin panel to manage room details and view bookings (if implemented)  
+✅ Admin panel to manage room details and view bookings
 ✅ Simple, responsive design using HTML and CSS  
 ✅ Backend logic powered by PHP for processing bookings and handling data
 
